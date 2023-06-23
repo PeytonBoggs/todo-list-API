@@ -22,6 +22,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
+	router.POST("/tasks", postTasks)
 
 	router.Run("localhost:8080")
 }
@@ -32,4 +33,15 @@ func getHealth(c *gin.Context) {
 
 func getTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tasks)
+}
+
+func postTasks(c *gin.Context) {
+	var newTask task
+
+	if err := c.BindJSON(&newTask); err != nil {
+		return
+	}
+
+	tasks = append(tasks, newTask)
+	c.IndentedJSON(http.StatusCreated, newTask)
 }
