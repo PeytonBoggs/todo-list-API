@@ -61,7 +61,7 @@ func postTasks(c *gin.Context) {
 }
 
 func deleteTask(c *gin.Context) {
-	id := c.Param("id")
+	var id string = c.Param("id")
 
 	for i := 0; i < len(tasks); i++ {
 		if tasks[i].ID == id {
