@@ -22,6 +22,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
+	router.GET("/tasks/:id", getTaskByID)
 	router.POST("/tasks", postTasks)
 
 	router.Run("localhost:8080")
@@ -33,6 +34,18 @@ func getHealth(c *gin.Context) {
 
 func getTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tasks)
+}
+
+func getTaskByID(c *gin.Context) {
+	id := c.Param("id")
+
+	for _, a := range tasks {
+		if a.ID == id {
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "task not found:"})
 }
 
 func postTasks(c *gin.Context) {
