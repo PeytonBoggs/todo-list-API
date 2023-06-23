@@ -24,6 +24,7 @@ func main() {
 	router.GET("/tasks", getTasks)
 	router.GET("/tasks/:id", getTaskByID)
 	router.POST("/tasks", postTasks)
+	router.PUT("/tasks/:id", putTasks)
 
 	router.Run("localhost:8080")
 }
@@ -55,6 +56,25 @@ func postTasks(c *gin.Context) {
 		return
 	}
 
+	tasks = append(tasks, newTask)
+	c.IndentedJSON(http.StatusCreated, newTask)
+}
+
+func putTasks(c *gin.Context) {
+	var newTask task
+	id := c.Param("id")
+
+	if err := c.BindJSON(&newTask); err != nil {
+		return
+	}
+
+	for i := 0; i < len(tasks); i++ {
+		if tasks[i].ID == id {
+			tasks[i] = newTask
+			c.IndentedJSON(http.StatusCreated, newTask)
+			return
+		}
+	}
 	tasks = append(tasks, newTask)
 	c.IndentedJSON(http.StatusCreated, newTask)
 }
