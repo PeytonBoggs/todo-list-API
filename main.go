@@ -62,16 +62,16 @@ func postTasks(c *gin.Context) {
 
 func putTasks(c *gin.Context) {
 	var newTask task
-	id := c.Param("id")
+	var id string = c.Param("id")
 
 	if err := c.BindJSON(&newTask); err != nil {
-		return
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"Error": "could not bind JSON"})
 	}
 
 	for i := 0; i < len(tasks); i++ {
 		if tasks[i].ID == id {
 			tasks[i] = newTask
-			c.IndentedJSON(http.StatusCreated, newTask)
+			c.IndentedJSON(http.StatusOK, newTask)
 			return
 		}
 	}
