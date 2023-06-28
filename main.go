@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
+
 	"todo-list/web-service-gin/docs"
 
 	"github.com/gin-gonic/gin"
-
-	// "github/PeytonBoggs/todo-list-API"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -50,8 +49,7 @@ func main() {
 	router := gin.Default()
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
-	url := ginSwagger.URL("http://localhost:8080/swagger/index.html")
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)

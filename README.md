@@ -6,6 +6,7 @@ Go:
         export DBPASS='(password)'
         go run .
 
+Curl:
     Get:
         curl http://localhost:8080/tasks
 
@@ -41,3 +42,10 @@ SQL:
 
     Get table:
         SELECT * FROM tasks;
+
+Swagger:
+    Init:
+        swag init
+
+    URL:
+        http://localhost:8080/swagger/index.html
