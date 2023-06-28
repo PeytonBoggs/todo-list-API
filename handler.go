@@ -7,33 +7,36 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Returns health, currently hardcoded to "OK"
 // getHealth godoc
-// @Summary Show the status of server.
-// @Description get the status of server.
+// @Summary getHealth
+// @Description Returns the health of the server - currently hardcoded to "OK"
 // @Tags root
 // @Accept */*
 // @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Router / [get]
+// @Router /health [get]
 func getHealth(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, "OK")
 }
 
-// Returns all tasks
 // getTasks godoc
-// @Summary Show the tasks.
-// @Description get all tasks.
+// @Summary getTasks
+// @Description Gets all tasks in database
 // @Tags root
 // @Accept */*
 // @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Router / [get]
+// @Router /tasks [get]
 func getTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tasks)
 }
 
-// Returns tasks with specified ID
+// getTaskByID godoc
+// @Summary getTaskByID
+// @Description Gets all tasks with specified ID
+// @Tags root
+// @Param id path int true "The specified ID"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [get]
 func getTaskByID(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
@@ -49,7 +52,15 @@ func getTaskByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "task not found:"})
 }
 
-// Adds task with specified params to the end of tasks
+// postTasks godoc
+// @Summary postTasks
+// @Description Adds new task at the end of database
+// @Tags root
+// @RequestBody required
+// @Param task body Task true "The task to add"
+// @Accept */*
+// @Produce json
+// @Router /tasks [POST]
 func postTasks(c *gin.Context) {
 	var newTask Task
 
@@ -61,7 +72,16 @@ func postTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newTask)
 }
 
-// Adds task with specified params at the task's ID (or end if ID does not exist)
+// putTasks godoc
+// @Summary putTasks
+// @Description Adds new task at the specified ID, or end of database if ID can't be found
+// @Tags root
+// @RequestBody required
+// @Param task body Task true "The task to add"
+// @Param id path int true "The specified ID"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [PUT]
 func putTasks(c *gin.Context) {
 	var newTask Task
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -84,7 +104,14 @@ func putTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newTask)
 }
 
-// Deletes task with specifed ID
+// deleteTask godoc
+// @Summary deleteTask
+// @Description Deletes tast at specified ID
+// @Tags root
+// @Param id path int true "The specified ID"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [DELETE]
 func deleteTask(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {

@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
+        "/health": {
             "get": {
-                "description": "get all tasks.",
+                "description": "Returns the health of the server - currently hardcoded to \"OK\"",
                 "consumes": [
                     "*/*"
                 ],
@@ -28,15 +28,144 @@ const docTemplate = `{
                 "tags": [
                     "root"
                 ],
-                "summary": "Show the tasks.",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                "summary": "getHealth",
+                "responses": {}
+            }
+        },
+        "/tasks": {
+            "get": {
+                "description": "Gets all tasks in database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasks",
+                "responses": {}
+            },
+            "post": {
+                "description": "Adds new task at the end of database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "postTasks",
+                "parameters": [
+                    {
+                        "description": "The task to add",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/main.Task"
                         }
                     }
+                ],
+                "responses": {}
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "description": "Gets all tasks with specified ID",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTaskByID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The specified ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Adds new task at the specified ID, or end of database if ID can't be found",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "putTasks",
+                "parameters": [
+                    {
+                        "description": "The task to add",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Task"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The specified ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Deletes tast at specified ID",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTask",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The specified ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "main.Task": {
+            "type": "object",
+            "properties": {
+                "complete": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         }

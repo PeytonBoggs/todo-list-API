@@ -7,6 +7,9 @@ Go:
         go run .
 
 Curl:
+    Get health:
+        curl http://localhost:8080/health
+        
     Get:
         curl http://localhost:8080/tasks
 

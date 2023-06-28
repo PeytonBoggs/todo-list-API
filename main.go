@@ -12,8 +12,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-//@BasePath /api/v1
-
 // @title Gin Swagger todo-list API
 // @version 1.0
 // @description This is a todo-list server.
@@ -48,7 +46,7 @@ func main() {
 
 	router := gin.Default()
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
+	docs.SwaggerInfo.BasePath = ""
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.GET("/health", getHealth)
