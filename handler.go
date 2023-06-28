@@ -8,11 +8,27 @@ import (
 )
 
 // Returns health, currently hardcoded to "OK"
+// getHealth godoc
+// @Summary Show the status of server.
+// @Description get the status of server.
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router / [get]
 func getHealth(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, "OK")
 }
 
 // Returns all tasks
+// getTasks godoc
+// @Summary Show the tasks.
+// @Description get all tasks.
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router / [get]
 func getTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tasks)
 }
