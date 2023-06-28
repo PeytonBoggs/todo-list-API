@@ -3,10 +3,25 @@ package main
 import (
 	"fmt"
 	"log"
+	"todo-list/web-service-gin/docs"
 
 	"github.com/gin-gonic/gin"
+
+	// "github/PeytonBoggs/todo-list-API"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+//@BasePath /api/v1
+
+// @title Gin Swagger todo-list API
+// @version 1.0
+// @description This is a todo-list server.
+
+// @host localhost:8080
+// @BasePath /
+// @schemes http
 func main() {
 	initSQL()
 
@@ -33,6 +48,10 @@ func main() {
 	fmt.Printf("Task found: %v\n", tsk)
 
 	router := gin.Default()
+
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	url := ginSwagger.URL("http://localhost:8080/swagger/index.html")
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
