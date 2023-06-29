@@ -3,45 +3,16 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
-	"os"
-
-	"github.com/go-sql-driver/mysql"
 )
 
-var db *sql.DB
-
-// Initializes SQL database
-func initSQL() {
-	cfg := mysql.Config{
-		User:   os.Getenv("DBUSER"),
-		Passwd: os.Getenv("DBPASS"),
-		Net:    "tcp",
-		Addr:   "127.0.0.1:3306",
-		DBName: "tasks",
-	}
-
-	var err error
-	db, err = sql.Open("mysql", cfg.FormatDSN())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pingErr := db.Ping()
-	if pingErr != nil {
-		log.Fatal(pingErr)
-	}
-	fmt.Println("Connected!")
-}
-
 // Adds task to the end of SQL database
-func addTask(tsk Task) (int64, error) {
+func postTask_sql(tsk Task) (int64, error) {
 	result, err := db.Exec("INSERT INTO tasks (ID, Title, Complete) VALUES (?, ?, ?)", tsk.ID, tsk.Title, tsk.Complete)
 	if err != nil {
 		return 0, fmt.Errorf("addTask: %v", err)
 	}
+
 	id, err := result.LastInsertId()
-	fmt.Println(id)
 	if err != nil {
 		return 0, fmt.Errorf("addTask: %v", err)
 	}
@@ -73,7 +44,7 @@ func tasksByComplete(complete string) ([]Task, error) {
 }
 
 // Returns task in SQL database with specified ID
-func taskByID(id int64) (Task, error) {
+func getTaskByID_sql(id int64) (Task, error) {
 	var tsk Task
 
 	row := db.QueryRow("SELECT * FROM tasks WHERE id = ?", id)

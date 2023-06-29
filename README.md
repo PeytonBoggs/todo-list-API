@@ -1,54 +1,86 @@
-Terminal commands:
+# todo-list-API
 
-Go:
-    Run:
-        export DBUSER='root'
-        export DBPASS='(password)'
-        go run .
+## Setup
 
-Curl:
-    Get health:
-        curl http://localhost:8080/health
-        
-    Get:
-        curl http://localhost:8080/tasks
+### Run the server:
+ 
+ From root,
 
-    Get by ID:
-        curl http://localhost:8080/tasks/2
+    `go run .`
 
-    Post:
-        curl http://localhost:8080/tasks \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "POST" \
-            --data '{"ID": "4", "Title": "Go to sleep", "Complete": "false"}'
+This command requires local .env file in this format:
 
-    Put:
-        curl http://localhost:8080/tasks/2 \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "PUT" \
-            --data '{"ID": "2","Title": "Stay at home", "Complete": "false"}'
+```
+DBUSER = "<username>"
+DBPASS = "<password>"
+NET = "tcp"
+ADDR = "127.0.0.1:3306"
+DBNAME = "tasks"
+```
 
-    Delete:
-        curl http://localhost:8080/tasks/2 \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "DELETE"
+For an example, see .env.example
 
-SQL:
-    Login to SQL:
-        mysql -u root -p
+### Login to SQL:
 
-    Set database:
-        use tasks;
+From root in a separate terminal,
 
-    Get table:
-        SELECT * FROM tasks;
+    mysql -u root -p
+    Password: pass
 
-Swagger:
-    Init:
-        swag init
+Set database:
 
-    URL:
-        http://localhost:8080/swagger/index.html
+    use tasks;
+
+### Initialize Swagger
+
+From root in a separate terminal,
+
+    swag init
+
+Then, as server is running, go to http://localhost:8080/swagger/index.html
+
+## Terminal commands:
+
+For all commands, 
+
+`<ID>` is an `int` value
+
+`<Title>` is a `string` value
+
+`<Complete>` is a `boolen` value
+
+
+### Get health:
+    curl http://localhost:8080/health
+    
+### Get all tasks:
+    curl http://localhost:8080/tasks
+
+### Get task by ID:
+    curl http://localhost:8080/tasks/<ID>
+
+### Post task:
+    curl http://localhost:8080/tasks \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "POST" \
+        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
+
+### Put task at ID:
+    curl http://localhost:8080/tasks/<ID> \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "PUT" \
+        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
+
+### Delete task by ID:
+    curl http://localhost:8080/tasks/<ID> \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "DELETE"
+
+### Get table:
+
+In SQL logged-in terminal, having set the database,
+
+    SELECT * FROM tasks;
