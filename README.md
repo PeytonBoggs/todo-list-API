@@ -1,60 +1,86 @@
-# Terminal commands:
+# todo-list-API
 
-## Go:
-### Run:
-    go run .
+## Setup
 
-    (requires local .env file with variables:
-    DBUSER = <username>
-    DBPASS = <password>
-    NET = "tcp"
-    ADDR = "127.0.0.1:3306"
-    DBNAME = "tasks")
+### Run the server:
+ 
+ From root,
 
-## Curl:
+    `go run .`
+
+This command requires local .env file in this format:
+
+```
+DBUSER = "<username>"
+DBPASS = "<password>"
+NET = "tcp"
+ADDR = "127.0.0.1:3306"
+DBNAME = "tasks"
+```
+
+For an example, see .env.example
+
+### Login to SQL:
+
+From root in a separate terminal,
+
+    mysql -u root -p
+    Password: pass
+
+Set database:
+
+    use tasks;
+
+### Initialize Swagger
+
+From root in a separate terminal,
+
+    swag init
+
+Then, as server is running, go to http://localhost:8080/swagger/index.html
+
+## Terminal commands:
+
+For all commands, 
+
+`<ID>` is an `int` value
+
+`<Title>` is a `string` value
+
+`<Complete>` is a `boolen` value
+
+
 ### Get health:
     curl http://localhost:8080/health
-        
-### Get:
+    
+### Get all tasks:
     curl http://localhost:8080/tasks
 
-### Get by ID:
-    curl http://localhost:8080/tasks/2
+### Get task by ID:
+    curl http://localhost:8080/tasks/<ID>
 
-### Post:
+### Post task:
     curl http://localhost:8080/tasks \
         --include \
         --header "Content-Type: application/json" \
         --request "POST" \
-        --data '{"ID": 4, "Title": "Go to sleep", "Complete": false}'
+        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
 
-### Put:
-    curl http://localhost:8080/tasks/2 \
+### Put task at ID:
+    curl http://localhost:8080/tasks/<ID> \
         --include \
         --header "Content-Type: application/json" \
         --request "PUT" \
-        --data '{"ID": 2,"Title": "Stay at home", "Complete": false}'
+        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
 
-### Delete:
-    curl http://localhost:8080/tasks/2 \
+### Delete task by ID:
+    curl http://localhost:8080/tasks/<ID> \
         --include \
         --header "Content-Type: application/json" \
         --request "DELETE"
 
-## SQL:
-### Login to SQL:
-    mysql -u root -p
-    Password: pass
-
-### Set database:
-    use tasks;
-
 ### Get table:
+
+In SQL logged-in terminal, having set the database,
+
     SELECT * FROM tasks;
-
-## Swagger:
-### Init:
-    swag init
-
-### URL:
-    http://localhost:8080/swagger/index.html
