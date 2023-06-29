@@ -4,6 +4,13 @@
 ### Run:
     go run .
 
+    (requires local .env file with variables:
+    DBUSER = <username>
+    DBPASS = <password>
+    NET = "tcp"
+    ADDR = "127.0.0.1:3306"
+    DBNAME = "tasks")
+
 ## Curl:
 ### Get health:
     curl http://localhost:8080/health
