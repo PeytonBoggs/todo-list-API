@@ -43,13 +43,12 @@ func getTaskByID(c *gin.Context) {
 		return
 	}
 
-	for _, a := range tasks {
-		if a.ID == id {
-			c.IndentedJSON(http.StatusOK, a)
-			return
-		}
+	foundTask, foundErr := getTaskByID_sql(id)
+	if foundErr != nil {
+		c.IndentedJSON(http.StatusNotFound, foundErr)
+		return
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "task not found:"})
+	c.IndentedJSON(http.StatusOK, foundTask)
 }
 
 // postTasks godoc
@@ -61,15 +60,20 @@ func getTaskByID(c *gin.Context) {
 // @Accept */*
 // @Produce json
 // @Router /tasks [POST]
-func postTasks(c *gin.Context) {
+func postTask(c *gin.Context) {
 	var newTask Task
 
 	if err := c.BindJSON(&newTask); err != nil {
 		return
 	}
 
-	tasks = append(tasks, newTask)
-	c.IndentedJSON(http.StatusCreated, newTask)
+	newTaskID, err := postTask_sql(newTask)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	c.IndentedJSON(http.StatusCreated, newTaskID)
+
 }
 
 // putTasks godoc

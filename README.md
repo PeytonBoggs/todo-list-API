@@ -1,54 +1,53 @@
-Terminal commands:
+# Terminal commands:
 
-Go:
-    Run:
-        export DBUSER='root'
-        export DBPASS='(password)'
-        go run .
+## Go:
+### Run:
+    go run .
 
-Curl:
-    Get health:
-        curl http://localhost:8080/health
+## Curl:
+### Get health:
+    curl http://localhost:8080/health
         
-    Get:
-        curl http://localhost:8080/tasks
+### Get:
+    curl http://localhost:8080/tasks
 
-    Get by ID:
-        curl http://localhost:8080/tasks/2
+### Get by ID:
+    curl http://localhost:8080/tasks/2
 
-    Post:
-        curl http://localhost:8080/tasks \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "POST" \
-            --data '{"ID": "4", "Title": "Go to sleep", "Complete": "false"}'
+### Post:
+    curl http://localhost:8080/tasks \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "POST" \
+        --data '{"ID": 4, "Title": "Go to sleep", "Complete": false}'
 
-    Put:
-        curl http://localhost:8080/tasks/2 \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "PUT" \
-            --data '{"ID": "2","Title": "Stay at home", "Complete": "false"}'
+### Put:
+    curl http://localhost:8080/tasks/2 \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "PUT" \
+        --data '{"ID": 2,"Title": "Stay at home", "Complete": false}'
 
-    Delete:
-        curl http://localhost:8080/tasks/2 \
-            --include \
-            --header "Content-Type: application/json" \
-            --request "DELETE"
+### Delete:
+    curl http://localhost:8080/tasks/2 \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "DELETE"
 
-SQL:
-    Login to SQL:
-        mysql -u root -p
+## SQL:
+### Login to SQL:
+    mysql -u root -p
+    Password: pass
 
-    Set database:
-        use tasks;
+### Set database:
+    use tasks;
 
-    Get table:
-        SELECT * FROM tasks;
+### Get table:
+    SELECT * FROM tasks;
 
-Swagger:
-    Init:
-        swag init
+## Swagger:
+### Init:
+    swag init
 
-    URL:
-        http://localhost:8080/swagger/index.html
+### URL:
+    http://localhost:8080/swagger/index.html
