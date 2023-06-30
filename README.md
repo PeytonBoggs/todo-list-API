@@ -47,7 +47,7 @@ For all commands,
 
 `<Title>` is a `string` value
 
-`<Complete>` is a `boolen` value
+`<Complete>` is a `boolean` value
 
 
 ### Get health:
