@@ -1,58 +1,29 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 )
 
+// TODO: add func getTasks_sql
+
+// TODO: add func getTaskByID_sql
+
+// TODO: add func getTasksByComplete_sql
+
 // Adds task to the end of SQL database
 func postTask_sql(tsk Task) (int64, error) {
-	result, err := db.Exec("INSERT INTO tasks (ID, Title, Complete) VALUES (?, ?, ?)", tsk.ID, tsk.Title, tsk.Complete)
+	result, err := db.Exec("INSERT INTO tasks (Title, Complete) VALUES (?, ?)", tsk.Title, tsk.Complete)
 	if err != nil {
-		return 0, fmt.Errorf("addTask: %v", err)
+		return 0, fmt.Errorf("error: %v", err)
 	}
 
-	id, err := result.LastInsertId()
+	newID, err := result.LastInsertId()
 	if err != nil {
-		return 0, fmt.Errorf("addTask: %v", err)
+		return 0, fmt.Errorf("error: %v", err)
 	}
-	return id, nil
+	return newID, nil
 }
 
-// Returns all tasks in SQL database with specified 'complete' state
-func tasksByComplete(complete string) ([]Task, error) {
-	var tasks []Task
+// TODO: add func putTasks_sql
 
-	rows, err := db.Query("SELECT * FROM tasks WHERE complete = ?", complete)
-	if err != nil {
-		return nil, fmt.Errorf("tasksByComplete %q: %v", complete, err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var tsk Task
-		if err := rows.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
-			return nil, fmt.Errorf("tasksByComplete %q: %v", complete, err)
-		}
-		tasks = append(tasks, tsk)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("albumsByComplete %q: %v", complete, err)
-	}
-	return tasks, nil
-}
-
-// Returns task in SQL database with specified ID
-func getTaskByID_sql(id int64) (Task, error) {
-	var tsk Task
-
-	row := db.QueryRow("SELECT * FROM tasks WHERE id = ?", id)
-	if err := row.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
-		if err == sql.ErrNoRows {
-			return tsk, fmt.Errorf("taskByID %d: no such task", id)
-		}
-		return tsk, fmt.Errorf("taskByID %d: %v", id, err)
-	}
-	return tsk, nil
-}
+// TODO: add func deleteTask_sql

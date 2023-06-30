@@ -3,7 +3,7 @@ definitions:
   main.Task:
     properties:
       complete:
-        type: string
+        type: boolean
       id:
         type: integer
       title:
@@ -16,28 +16,7 @@ info:
   title: Gin Swagger todo-list API
   version: "1.0"
 paths:
-  /health:
-    get:
-      consumes:
-      - '*/*'
-      description: Returns the health of the server - currently hardcoded to "OK"
-      produces:
-      - application/json
-      responses: {}
-      summary: getHealth
-      tags:
-      - root
   /tasks:
-    get:
-      consumes:
-      - '*/*'
-      description: Gets all tasks in database
-      produces:
-      - application/json
-      responses: {}
-      summary: getTasks
-      tags:
-      - root
     post:
       consumes:
       - '*/*'
@@ -53,62 +32,6 @@ paths:
       - application/json
       responses: {}
       summary: postTasks
-      tags:
-      - root
-  /tasks/{id}:
-    delete:
-      consumes:
-      - '*/*'
-      description: Deletes tast at specified ID
-      parameters:
-      - description: The specified ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: deleteTask
-      tags:
-      - root
-    get:
-      consumes:
-      - '*/*'
-      description: Gets all tasks with specified ID
-      parameters:
-      - description: The specified ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: getTaskByID
-      tags:
-      - root
-    put:
-      consumes:
-      - '*/*'
-      description: Adds new task at the specified ID, or end of database if ID can't
-        be found
-      parameters:
-      - description: The task to add
-        in: body
-        name: task
-        required: true
-        schema:
-          $ref: '#/definitions/main.Task'
-      - description: The specified ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      summary: putTasks
       tags:
       - root
 schemes:

@@ -47,7 +47,7 @@ For all commands,
 
 `<Title>` is a `string` value
 
-`<Complete>` is a `boolen` value
+`<Complete>` is a `boolean` value
 
 
 ### Get health:
@@ -64,7 +64,7 @@ For all commands,
         --include \
         --header "Content-Type: application/json" \
         --request "POST" \
-        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
+        --data '{"Title": "<Title>", "Complete": <Complete>}'
 
 ### Put task at ID:
     curl http://localhost:8080/tasks/<ID> \
