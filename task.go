@@ -5,3 +5,8 @@ type Task struct {
 	Title    string `json:"title"`
 	Complete bool   `json:"complete"`
 }
+
+type shortTask struct {
+	Title    string `json:"title"`
+	Complete bool   `json:"complete"`
+}

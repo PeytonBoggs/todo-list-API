@@ -15,8 +15,28 @@ func getHealth(c *gin.Context) {
 func getTasks(c *gin.Context) {
 }
 
-// TODO: Implement getTasksByID
+// getTaskByID godoc
+// @Summary getTaskByID
+// @Description Gets all tasks with specified ID
+// @Tags root
+// @Param id path int true "ID to get"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [get]
 func getTaskByID(c *gin.Context) {
+	searchedID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+	}
+
+	foundTask, err := getTaskByID_sql(searchedID)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, foundTask)
 }
 
 // TODO: add func getTasksByComplete
@@ -26,12 +46,12 @@ func getTaskByID(c *gin.Context) {
 // @Description Adds new task at the end of database
 // @Tags root
 // @RequestBody required
-// @Param task body Task true "The task to add"
+// @Param Task body shortTask true "Task to add"
 // @Accept */*
 // @Produce json
 // @Router /tasks [POST]
 func postTask(c *gin.Context) {
-	var newTask Task
+	var newTask shortTask
 
 	if err := c.BindJSON(&newTask); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)
