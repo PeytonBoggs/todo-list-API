@@ -159,10 +159,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "complete": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "title": {
                     "type": "string"

@@ -3,9 +3,7 @@ definitions:
   main.Task:
     properties:
       complete:
-        type: string
-      id:
-        type: integer
+        type: boolean
       title:
         type: string
     type: object

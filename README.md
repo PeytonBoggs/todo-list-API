@@ -64,7 +64,7 @@ For all commands,
         --include \
         --header "Content-Type: application/json" \
         --request "POST" \
-        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
+        --data '{"Title": "<Title>", "Complete": <Complete>}'
 
 ### Put task at ID:
     curl http://localhost:8080/tasks/<ID> \
