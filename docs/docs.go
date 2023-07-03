@@ -31,13 +31,38 @@ const docTemplate = `{
                 "summary": "postTasks",
                 "parameters": [
                     {
-                        "description": "The task to add",
-                        "name": "task",
+                        "description": "Task to add",
+                        "name": "Task",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Task"
+                            "$ref": "#/definitions/main.shortTask"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "description": "Gets all tasks with specified ID",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTaskByID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID to get",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}
@@ -45,14 +70,11 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.Task": {
+        "main.shortTask": {
             "type": "object",
             "properties": {
                 "complete": {
                     "type": "boolean"
-                },
-                "id": {
-                    "type": "integer"
                 },
                 "title": {
                     "type": "string"

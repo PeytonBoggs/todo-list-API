@@ -1,11 +1,9 @@
 basePath: /
 definitions:
-  main.Task:
+  main.shortTask:
     properties:
       complete:
         type: boolean
-      id:
-        type: integer
       title:
         type: string
     type: object
@@ -22,16 +20,33 @@ paths:
       - '*/*'
       description: Adds new task at the end of database
       parameters:
-      - description: The task to add
+      - description: Task to add
         in: body
-        name: task
+        name: Task
         required: true
         schema:
-          $ref: '#/definitions/main.Task'
+          $ref: '#/definitions/main.shortTask'
       produces:
       - application/json
       responses: {}
       summary: postTasks
+      tags:
+      - root
+  /tasks/{id}:
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks with specified ID
+      parameters:
+      - description: ID to get
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: getTaskByID
       tags:
       - root
 schemes:
