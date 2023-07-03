@@ -15,6 +15,16 @@ info:
   version: "1.0"
 paths:
   /tasks:
+    delete:
+      consumes:
+      - '*/*'
+      description: Deletes all tasks
+      produces:
+      - application/json
+      responses: {}
+      summary: deleteTasks
+      tags:
+      - root
     post:
       consumes:
       - '*/*'

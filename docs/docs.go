@@ -41,6 +41,20 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "delete": {
+                "description": "Deletes all tasks",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTasks",
+                "responses": {}
             }
         },
         "/tasks/{id}": {
