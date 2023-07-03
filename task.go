@@ -6,7 +6,7 @@ type Task struct {
 	Complete bool   `json:"complete"`
 }
 
-type shortTask struct {
+type TaskPayload struct {
 	Title    string `json:"title"`
 	Complete bool   `json:"complete"`
 }

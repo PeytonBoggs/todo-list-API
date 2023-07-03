@@ -46,12 +46,12 @@ func getTaskByID(c *gin.Context) {
 // @Description Adds new task at the end of database
 // @Tags root
 // @RequestBody required
-// @Param Task body shortTask true "Task to add"
+// @Param Task body TaskPayload true "Task to add"
 // @Accept */*
 // @Produce json
 // @Router /tasks [POST]
 func postTask(c *gin.Context) {
-	var newTask shortTask
+	var newTask TaskPayload
 
 	if err := c.BindJSON(&newTask); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)
@@ -72,6 +72,27 @@ func postTask(c *gin.Context) {
 func putTasks(c *gin.Context) {
 }
 
-// TODO: Implement deleteTask
-func deleteTask(c *gin.Context) {
+// deleteTaskByID godoc
+// @Summary deleteTaskByID
+// @Description Deletes tast at specified ID
+// @Tags root
+// @Param id path int true "The specified ID"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [DELETE]
+func deleteTaskByID(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	rowsAffected, err := deleteTaskByID_sql(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+		return
+	}
+
+	message := strconv.Itoa(int(rowsAffected)) + " task deleted"
+	c.IndentedJSON(http.StatusOK, message)
 }
