@@ -29,7 +29,7 @@ func main() {
 	router.GET("/tasks/:id", getTaskByID)
 	router.POST("/tasks", postTask)
 	router.PUT("/tasks/:id", putTasks)
-	router.DELETE("/tasks/:id", deleteTask)
+	router.DELETE("/tasks/:id", deleteTaskByID)
 
 	router.Run("localhost:8080")
 }

@@ -46,7 +46,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: deleteTask
+      summary: deleteTaskByID
       tags:
       - root
     get:

@@ -39,7 +39,7 @@ func postTask_sql(tsk shortTask) (int64, error) {
 
 // TODO: add func putTasks_sql
 
-func deleteTask_sql(id int) (int64, error) {
+func deleteTaskByID_sql(id int) (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks WHERE id=(?)", id)
 	if err != nil {
 		return 0, err

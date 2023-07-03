@@ -78,7 +78,7 @@ const docTemplate = `{
                 "tags": [
                     "root"
                 ],
-                "summary": "deleteTask",
+                "summary": "deleteTaskByID",
                 "parameters": [
                     {
                         "type": "integer",
