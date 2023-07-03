@@ -32,7 +32,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.shortTask"
+                            "$ref": "#/definitions/main.TaskPayload"
                         }
                     }
                 ],
@@ -89,7 +89,7 @@
         }
     },
     "definitions": {
-        "main.shortTask": {
+        "main.TaskPayload": {
             "type": "object",
             "properties": {
                 "complete": {

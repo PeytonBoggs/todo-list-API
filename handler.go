@@ -46,12 +46,12 @@ func getTaskByID(c *gin.Context) {
 // @Description Adds new task at the end of database
 // @Tags root
 // @RequestBody required
-// @Param Task body shortTask true "Task to add"
+// @Param Task body TaskPayload true "Task to add"
 // @Accept */*
 // @Produce json
 // @Router /tasks [POST]
 func postTask(c *gin.Context) {
-	var newTask shortTask
+	var newTask TaskPayload
 
 	if err := c.BindJSON(&newTask); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)

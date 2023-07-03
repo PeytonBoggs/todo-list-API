@@ -24,7 +24,7 @@ func getTaskByID_sql(id int) (Task, error) {
 // TODO: add func getTasksByComplete_sql
 
 // Adds task to the end of SQL database
-func postTask_sql(tsk shortTask) (int64, error) {
+func postTask_sql(tsk TaskPayload) (int64, error) {
 	result, err := db.Exec("INSERT INTO tasks (Title, Complete) VALUES (?, ?)", tsk.Title, tsk.Complete)
 	if err != nil {
 		return 0, fmt.Errorf("error: %v", err)

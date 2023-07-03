@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  main.shortTask:
+  main.TaskPayload:
     properties:
       complete:
         type: boolean
@@ -25,7 +25,7 @@ paths:
         name: Task
         required: true
         schema:
-          $ref: '#/definitions/main.shortTask'
+          $ref: '#/definitions/main.TaskPayload'
       produces:
       - application/json
       responses: {}

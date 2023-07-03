@@ -36,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.shortTask"
+                            "$ref": "#/definitions/main.TaskPayload"
                         }
                     }
                 ],
@@ -93,7 +93,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.shortTask": {
+        "main.TaskPayload": {
             "type": "object",
             "properties": {
                 "complete": {
