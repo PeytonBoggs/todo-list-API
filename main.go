@@ -30,6 +30,7 @@ func main() {
 	router.POST("/tasks", postTask)
 	router.PUT("/tasks/:id", putTasks)
 	router.DELETE("/tasks/:id", deleteTaskByID)
+	router.PATCH("/tasks/:id", patchCompleteByID)
 
 	router.Run("localhost:8080")
 }

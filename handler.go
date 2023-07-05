@@ -96,3 +96,28 @@ func deleteTaskByID(c *gin.Context) {
 	message := strconv.Itoa(int(rowsAffected)) + " task deleted"
 	c.IndentedJSON(http.StatusOK, message)
 }
+
+// patchCompleteByID godoc
+// @Summary patchCompleteByID
+// @Description Toggles complete at specified ID
+// @Tags root
+// @Param id path int true "The specified ID"
+// @Accept */*
+// @Produce json
+// @Router /tasks/{id} [PATCH]
+func patchCompleteByID(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	rowsAffected, err := patchCompleteByID_sql(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+		return
+	}
+
+	message := strconv.Itoa(int(rowsAffected)) + " task toggled"
+	c.IndentedJSON(http.StatusOK, message)
+}
