@@ -26,11 +26,12 @@ func main() {
 
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
-	router.GET("/tasks/:id", getTaskByID)
+	router.GET("/tasks/id/:id", getTaskByID)
+	router.GET("/tasks/complete/:complete", getTasksByComplete)
 	router.POST("/tasks", postTask)
-	router.PUT("/tasks/:id", putTasks)
+	router.PUT("/tasks/id/:id", putTasks)
+	router.DELETE("/tasks/id/:id", deleteTaskByID)
 	router.DELETE("/tasks", deleteTasks)
-	router.DELETE("/tasks/:id", deleteTaskByID)
 
 	router.Run("localhost:8080")
 }

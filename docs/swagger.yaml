@@ -50,7 +50,24 @@ paths:
       summary: postTasks
       tags:
       - root
-  /tasks/{id}:
+  /tasks/complete/{complete}:
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks with specified "complete" value
+      parameters:
+      - description: Complete? true or false
+        in: path
+        name: complete
+        required: true
+        type: boolean
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasksByComplete
+      tags:
+      - root
+  /tasks/id/{id}:
     delete:
       consumes:
       - '*/*'

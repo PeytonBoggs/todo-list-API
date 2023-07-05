@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +35,7 @@ func getTasks(c *gin.Context) {
 // @Param id path int true "ID to get"
 // @Accept */*
 // @Produce json
-// @Router /tasks/{id} [get]
+// @Router /tasks/id/{id} [get]
 func getTaskByID(c *gin.Context) {
 	searchedID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -51,7 +52,28 @@ func getTaskByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, foundTask)
 }
 
-// TODO: add func getTasksByComplete
+// getTasksByComplete godoc
+// @Summary getTasksByComplete
+// @Description Gets all tasks with specified "complete" value
+// @Tags root
+// @Param complete path boolean true "Complete? true or false""
+// @Accept */*
+// @Produce json
+// @Router /tasks/complete/{complete} [GET]
+func getTasksByComplete(c *gin.Context) {
+	complete, err := strconv.ParseBool(strings.ToUpper(c.Param("complete")))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, "Error: value can either be true or false")
+		return
+	}
+
+	taskList, err := getTasksByComplete_sql(complete)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+	}
+
+	c.IndentedJSON(http.StatusOK, taskList)
+}
 
 // postTask godoc
 // @Summary postTasks
@@ -109,7 +131,7 @@ func deleteTasks(c *gin.Context) {
 // @Param id path int true "The specified ID"
 // @Accept */*
 // @Produce json
-// @Router /tasks/{id} [DELETE]
+// @Router /tasks/id/{id} [DELETE]
 func deleteTaskByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
