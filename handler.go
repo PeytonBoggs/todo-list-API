@@ -149,6 +149,25 @@ func deleteTaskByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, message)
 }
 
+// getTasksByTitle godoc
+// @Summary getTasksByTitle
+// @Description Gets all tasks whose title includes the specified string
+// @Tags root
+// @Param title path string true "The specified string"
+// @Accept */*
+// @Produce json
+// @Router /tasks/title/{title} [get]
+func getTasksByTitle(c *gin.Context) {
+	title := c.Param("title")
+
+	taskList, err := getTasksByTitle_sql(title)
+  if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+		return
+	}
+  c.IndentedJSON(http.StatusOK, taskList)
+}
+
 // patchCompleteByID godoc
 // @Summary patchCompleteByID
 // @Description Toggles complete at specified ID
@@ -165,7 +184,7 @@ func patchCompleteByID(c *gin.Context) {
 	}
 
 	rowsAffected, err := patchCompleteByID_sql(id)
-	if err != nil {
+  if err != nil {
 		c.IndentedJSON(http.StatusNotFound, err)
 		return
 	}

@@ -118,6 +118,26 @@ func deleteTaskByID_sql(id int) (int64, error) {
 	return rowsAffected, nil
 }
 
+func getTasksByTitle_sql(title string) ([]Task, error) {
+	var taskList []Task
+
+	tasks, err := db.Query("SELECT * FROM tasks WHERE title LIKE (?)", "%"+title+"%")
+	if err != nil {
+		return taskList, err
+	}
+
+	for tasks.Next() {
+		var tsk Task
+
+		if err := tasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
+			return taskList, err
+		}
+
+		taskList = append(taskList, tsk)
+	}
+
+	return taskList, nil
+
 // Toggles the complete boolean of the task with input id in SQL database
 func patchCompleteByID_sql(id int) (int64, error) {
 	result, err := db.Exec("UPDATE tasks SET complete = CASE WHEN complete = true THEN false WHEN complete = false THEN true END WHERE id = (?)", id)

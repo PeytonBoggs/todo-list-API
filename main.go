@@ -26,7 +26,8 @@ func main() {
 
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
-	router.GET("/tasks/id/:id", getTaskByID)
+ 	router.GET("/tasks/id/:id", getTaskByID)
+	router.GET("/tasks/title/:title", getTasksByTitle)
 	router.GET("/tasks/complete/:complete", getTasksByComplete)
 	router.POST("/tasks", postTask)
 	router.PATCH("/tasks/id/:id", patchCompleteByID)

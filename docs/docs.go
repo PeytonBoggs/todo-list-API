@@ -71,6 +71,9 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/tasks/title/{title}": {
+            "get": {
+                "description": "Gets all tasks whose title includes the specified string",
         "/tasks/complete/{complete}": {
             "get": {
                 "description": "Gets all tasks with specified \"complete\" value",
@@ -83,6 +86,12 @@ const docTemplate = `{
                 "tags": [
                     "root"
                 ],
+                "summary": "getTasksByTitle",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The specified string",
+                        "name": "title",
                 "summary": "getTasksByComplete",
                 "parameters": [
                     {

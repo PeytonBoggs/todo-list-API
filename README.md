@@ -66,6 +66,9 @@ For all commands,
 ### Get task by Complete:
     curl http://localhost:8080/tasks/complete/{complete}
 
+### Get tasks by Title:
+    curl http://localhost:8080/tasks/title/{title}
+
 ### Post task:
     curl http://localhost:8080/tasks \
         --include \
