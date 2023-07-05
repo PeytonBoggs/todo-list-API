@@ -26,7 +26,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "getTasks",
                 "responses": {}
@@ -40,7 +40,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "postTasks",
                 "parameters": [
@@ -65,15 +65,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "deleteTasks",
                 "responses": {}
             }
         },
-        "/tasks/title/{title}": {
-            "get": {
-                "description": "Gets all tasks whose title includes the specified string",
         "/tasks/complete/{complete}": {
             "get": {
                 "description": "Gets all tasks with specified \"complete\" value",
@@ -84,14 +81,8 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
-                "summary": "getTasksByTitle",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The specified string",
-                        "name": "title",
                 "summary": "getTasksByComplete",
                 "parameters": [
                     {
@@ -115,7 +106,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "getTaskByID",
                 "parameters": [
@@ -138,7 +129,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "deleteTaskByID",
                 "parameters": [
@@ -161,7 +152,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "tasks"
                 ],
                 "summary": "patchCompleteByID",
                 "parameters": [
@@ -169,6 +160,31 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "The specified ID",
                         "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/tasks/title/{title}": {
+            "get": {
+                "description": "Gets all tasks whose title includes the specified string",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "getTasksByTitle",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The specified string",
+                        "name": "title",
                         "in": "path",
                         "required": true
                     }

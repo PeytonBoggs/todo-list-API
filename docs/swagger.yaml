@@ -23,6 +23,8 @@ paths:
       - application/json
       responses: {}
       summary: deleteTasks
+      tags:
+      - tasks
     get:
       consumes:
       - '*/*'
@@ -32,7 +34,7 @@ paths:
       responses: {}
       summary: getTasks
       tags:
-      - root
+      - tasks
     post:
       consumes:
       - '*/*'
@@ -49,7 +51,7 @@ paths:
       responses: {}
       summary: postTasks
       tags:
-      - root
+      - tasks
   /tasks/complete/{complete}:
     get:
       consumes:
@@ -66,7 +68,7 @@ paths:
       responses: {}
       summary: getTasksByComplete
       tags:
-      - root
+      - tasks
   /tasks/id/{id}:
     delete:
       consumes:
@@ -83,7 +85,7 @@ paths:
       responses: {}
       summary: deleteTaskByID
       tags:
-      - root
+      - tasks
     get:
       consumes:
       - '*/*'
@@ -99,22 +101,7 @@ paths:
       responses: {}
       summary: getTaskByID
       tags:
-      - root
-  /tasks/title/{title}:
-    get:
-      consumes:
-      - '*/*'
-      description: Gets all tasks whose title includes the specified string
-      parameters:
-      - description: The specified string
-        in: path
-        name: title
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses: {}
-      summary: getTasksByTitle
+      - tasks
     patch:
       consumes:
       - '*/*'
@@ -130,7 +117,24 @@ paths:
       responses: {}
       summary: patchCompleteByID
       tags:
-      - root
+      - tasks
+  /tasks/title/{title}:
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks whose title includes the specified string
+      parameters:
+      - description: The specified string
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasksByTitle
+      tags:
+      - tasks
 schemes:
 - http
 swagger: "2.0"
