@@ -15,6 +15,16 @@ info:
   version: "1.0"
 paths:
   /tasks:
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks in database
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasks
+      tags:
+      - root
     post:
       consumes:
       - '*/*'

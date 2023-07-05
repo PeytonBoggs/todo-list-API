@@ -5,7 +5,27 @@ import (
 	"fmt"
 )
 
-// TODO: add func getTasks_sql
+// Returns all tasks in SQL database
+func getTasks_sql() ([]Task, error) {
+	var taskList []Task
+
+	tasks, err := db.Query("SELECT * FROM tasks")
+	if err != nil {
+		return taskList, err
+	}
+
+	for tasks.Next() {
+		var tsk Task
+
+		if err := tasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
+			return taskList, err
+		}
+
+		taskList = append(taskList, tsk)
+	}
+
+	return taskList, nil
+}
 
 // Returns task in SQL database with specified ID
 func getTaskByID_sql(id int) (Task, error) {

@@ -11,8 +11,20 @@ import (
 func getHealth(c *gin.Context) {
 }
 
-// TODO: Implement getTasks
+// getTasks godoc
+// @Summary getTasks
+// @Description Gets all tasks in database
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Router /tasks [get]
 func getTasks(c *gin.Context) {
+	taskList, err := getTasks_sql()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
+
+	c.IndentedJSON(http.StatusOK, taskList)
 }
 
 // getTaskByID godoc
