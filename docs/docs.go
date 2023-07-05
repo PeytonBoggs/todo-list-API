@@ -17,6 +17,20 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/tasks": {
+            "get": {
+                "description": "Gets all tasks in database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasks",
+                "responses": {}
+            },
             "post": {
                 "description": "Adds new task at the end of database",
                 "consumes": [
@@ -41,11 +55,28 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "delete": {
+                "description": "Deletes all tasks",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTasks",
+                "responses": {}
             }
         },
         "/tasks/title/{title}": {
             "get": {
                 "description": "Gets all tasks whose title includes the specified string",
+        "/tasks/complete/{complete}": {
+            "get": {
+                "description": "Gets all tasks with specified \"complete\" value",
                 "consumes": [
                     "*/*"
                 ],
@@ -61,6 +92,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "The specified string",
                         "name": "title",
+                "summary": "getTasksByComplete",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Complete? true or false",
+                        "name": "complete",
                         "in": "path",
                         "required": true
                     }
@@ -68,7 +105,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/tasks/{id}": {
+        "/tasks/id/{id}": {
             "get": {
                 "description": "Gets all tasks with specified ID",
                 "consumes": [
@@ -104,6 +141,29 @@ const docTemplate = `{
                     "root"
                 ],
                 "summary": "deleteTaskByID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The specified ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "patch": {
+                "description": "Toggles complete at specified ID",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "patchCompleteByID",
                 "parameters": [
                     {
                         "type": "integer",

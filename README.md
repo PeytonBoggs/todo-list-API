@@ -4,7 +4,7 @@
 
 ### Run the server:
  
- From root,
+From root,
 
     `go run .`
 
@@ -20,7 +20,15 @@ DBNAME = "tasks"
 
 For an example, see .env.example
 
-### Login to SQL:
+### Swagger:
+
+As server is running, go to http://localhost:8080/swagger/index.html
+
+To update swag docs (in docs folder),
+
+    swag init
+
+### SQL:
 
 From root in a separate terminal,
 
@@ -31,23 +39,19 @@ Set database:
 
     use tasks;
 
-### Initialize Swagger
+Then run:
 
-From root in a separate terminal,
-
-    swag init
-
-Then, as server is running, go to http://localhost:8080/swagger/index.html
+    SELECT * FROM tasks;
 
 ## Terminal commands:
 
 For all commands, 
 
-`<ID>` is an `int` value
+`{id}` is an `int` value
 
-`<Title>` is a `string` value
+`{title}` is a `string` value
 
-`<Complete>` is a `boolean` value
+`{complete}` is a `boolean` value
 
 
 ### Get health:
@@ -57,7 +61,10 @@ For all commands,
     curl http://localhost:8080/tasks
 
 ### Get task by ID:
-    curl http://localhost:8080/tasks/<ID>
+    curl http://localhost:8080/tasks/id/{id}
+
+### Get task by Complete:
+    curl http://localhost:8080/tasks/complete/{complete}
 
 ### Get tasks by Title:
     curl http://localhost:8080/tasks/title/{title}
@@ -67,20 +74,26 @@ For all commands,
         --include \
         --header "Content-Type: application/json" \
         --request "POST" \
-        --data '{"Title": "<Title>", "Complete": <Complete>}'
+        --data '{"Title": "{title}", "Complete": {complete}}'
 
 ### Put task at ID:
-    curl http://localhost:8080/tasks/<ID> \
+    curl http://localhost:8080/tasks/id/{id} \
         --include \
         --header "Content-Type: application/json" \
         --request "PUT" \
-        --data '{"ID": <ID>,"Title": "<Title>", "Complete": <Complete>}'
+        --data '{"ID": {id}, "Title": "{title}", "Complete": {complete}}'
 
 ### Delete task by ID:
-    curl http://localhost:8080/tasks/<ID> \
+    curl http://localhost:8080/tasks/id/{id} \
         --include \
         --header "Content-Type: application/json" \
         --request "DELETE"
+
+### Patch complete by ID:
+    curl http://localhost:8080/tasks/{id} \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "PATCH"
 
 ### Get table:
 
