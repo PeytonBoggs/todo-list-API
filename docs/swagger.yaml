@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  main.shortTask:
+  main.TaskPayload:
     properties:
       complete:
         type: boolean
@@ -23,6 +23,14 @@ paths:
       - application/json
       responses: {}
       summary: deleteTasks
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks in database
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasks
       tags:
       - root
     post:
@@ -35,7 +43,7 @@ paths:
         name: Task
         required: true
         schema:
-          $ref: '#/definitions/main.shortTask'
+          $ref: '#/definitions/main.TaskPayload'
       produces:
       - application/json
       responses: {}
@@ -43,6 +51,22 @@ paths:
       tags:
       - root
   /tasks/{id}:
+    delete:
+      consumes:
+      - '*/*'
+      description: Deletes tast at specified ID
+      parameters:
+      - description: The specified ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: deleteTaskByID
+      tags:
+      - root
     get:
       consumes:
       - '*/*'

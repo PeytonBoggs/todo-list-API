@@ -5,7 +5,27 @@ import (
 	"fmt"
 )
 
-// TODO: add func getTasks_sql
+// Returns all tasks in SQL database
+func getTasks_sql() ([]Task, error) {
+	var taskList []Task
+
+	tasks, err := db.Query("SELECT * FROM tasks")
+	if err != nil {
+		return taskList, err
+	}
+
+	for tasks.Next() {
+		var tsk Task
+
+		if err := tasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
+			return taskList, err
+		}
+
+		taskList = append(taskList, tsk)
+	}
+
+	return taskList, nil
+}
 
 // Returns task in SQL database with specified ID
 func getTaskByID_sql(id int) (Task, error) {
@@ -24,7 +44,7 @@ func getTaskByID_sql(id int) (Task, error) {
 // TODO: add func getTasksByComplete_sql
 
 // Adds task to the end of SQL database
-func postTask_sql(tsk shortTask) (int64, error) {
+func postTask_sql(tsk TaskPayload) (int64, error) {
 	result, err := db.Exec("INSERT INTO tasks (Title, Complete) VALUES (?, ?)", tsk.Title, tsk.Complete)
 	if err != nil {
 		return 0, fmt.Errorf("error: %v", err)
@@ -42,7 +62,7 @@ func postTask_sql(tsk shortTask) (int64, error) {
 // Deletes all tasks in SQL database
 func deleteTasks_sql() (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks")
-	if err != nil {
+  if err != nil {
 		return 0, err
 	}
 
@@ -50,8 +70,8 @@ func deleteTasks_sql() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-
-	_, err = db.Exec("TRUNCATE TABLE tasks")
+  
+  _, err = db.Exec("TRUNCATE TABLE tasks")
 	if err != nil {
 		return 0, err
 	}
@@ -64,4 +84,16 @@ func deleteTasks_sql() (int64, error) {
 	return rowsAffected, nil
 }
 
-// TODO: add func deleteTask_sql
+func deleteTaskByID_sql(id int) (int64, error) {
+	result, err := db.Exec("DELETE FROM tasks WHERE id=(?)", id)
+	if err != nil {
+		return 0, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return rowsAffected, nil
+}

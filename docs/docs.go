@@ -17,6 +17,20 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/tasks": {
+            "get": {
+                "description": "Gets all tasks in database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasks",
+                "responses": {}
+            },
             "post": {
                 "description": "Adds new task at the end of database",
                 "consumes": [
@@ -36,7 +50,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.shortTask"
+                            "$ref": "#/definitions/main.TaskPayload"
                         }
                     }
                 ],
@@ -80,11 +94,34 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "delete": {
+                "description": "Deletes tast at specified ID",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTaskByID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The specified ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
             }
         }
     },
     "definitions": {
-        "main.shortTask": {
+        "main.TaskPayload": {
             "type": "object",
             "properties": {
                 "complete": {
