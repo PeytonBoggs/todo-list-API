@@ -59,6 +59,9 @@ For all commands,
 ### Get task by ID:
     curl http://localhost:8080/tasks/<ID>
 
+### Get tasks by Title:
+    curl http://localhost:8080/tasks/title/{title}
+
 ### Post task:
     curl http://localhost:8080/tasks \
         --include \

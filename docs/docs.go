@@ -43,6 +43,31 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/tasks/title/{title}": {
+            "get": {
+                "description": "Gets all tasks whose title includes the specified string",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasksByTitle",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The specified string",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/tasks/{id}": {
             "get": {
                 "description": "Gets all tasks with specified ID",

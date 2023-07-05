@@ -65,6 +65,23 @@ paths:
       summary: getTaskByID
       tags:
       - root
+  /tasks/title/{title}:
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks whose title includes the specified string
+      parameters:
+      - description: The specified string
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasksByTitle
+      tags:
+      - root
 schemes:
 - http
 swagger: "2.0"

@@ -52,3 +52,24 @@ func deleteTaskByID_sql(id int) (int64, error) {
 
 	return rowsAffected, nil
 }
+
+func getTasksByTitle_sql(title string) ([]Task, error) {
+	var taskList []Task
+
+	tasks, err := db.Query("SELECT * FROM tasks WHERE title LIKE (?)", "%"+title+"%")
+	if err != nil {
+		return taskList, err
+	}
+
+	for tasks.Next() {
+		var tsk Task
+
+		if err := tasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
+			return taskList, err
+		}
+
+		taskList = append(taskList, tsk)
+	}
+
+	return taskList, nil
+}

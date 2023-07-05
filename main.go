@@ -27,6 +27,7 @@ func main() {
 	router.GET("/health", getHealth)
 	router.GET("/tasks", getTasks)
 	router.GET("/tasks/:id", getTaskByID)
+	router.GET("/tasks/title/:title", getTasksByTitle)
 	router.POST("/tasks", postTask)
 	router.PUT("/tasks/:id", putTasks)
 	router.DELETE("/tasks/:id", deleteTaskByID)
