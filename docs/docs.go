@@ -17,6 +17,20 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/tasks": {
+            "get": {
+                "description": "Gets all tasks in database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasks",
+                "responses": {}
+            },
             "post": {
                 "description": "Adds new task at the end of database",
                 "consumes": [
@@ -41,9 +55,48 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "delete": {
+                "description": "Deletes all tasks",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTasks",
+                "responses": {}
             }
         },
-        "/tasks/{id}": {
+        "/tasks/complete/{complete}": {
+            "get": {
+                "description": "Gets all tasks with specified \"complete\" value",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasksByComplete",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Complete? true or false",
+                        "name": "complete",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/tasks/id/{id}": {
             "get": {
                 "description": "Gets all tasks with specified ID",
                 "consumes": [
