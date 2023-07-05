@@ -15,6 +15,24 @@ info:
   version: "1.0"
 paths:
   /tasks:
+    delete:
+      consumes:
+      - '*/*'
+      description: Deletes all tasks
+      produces:
+      - application/json
+      responses: {}
+      summary: deleteTasks
+    get:
+      consumes:
+      - '*/*'
+      description: Gets all tasks in database
+      produces:
+      - application/json
+      responses: {}
+      summary: getTasks
+      tags:
+      - root
     post:
       consumes:
       - '*/*'

@@ -31,6 +31,7 @@ func main() {
 	router.POST("/tasks", postTask)
 	router.PUT("/tasks/id/:id", putTasks)
 	router.DELETE("/tasks/id/:id", deleteTaskByID)
+	router.DELETE("/tasks", deleteTasks)
 
 	router.Run("localhost:8080")
 }

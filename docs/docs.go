@@ -17,6 +17,20 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/tasks": {
+            "get": {
+                "description": "Gets all tasks in database",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasks",
+                "responses": {}
+            },
             "post": {
                 "description": "Adds new task at the end of database",
                 "consumes": [
@@ -40,6 +54,20 @@ const docTemplate = `{
                         }
                     }
                 ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Deletes all tasks",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "deleteTasks",
                 "responses": {}
             }
         },
