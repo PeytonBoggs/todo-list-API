@@ -59,6 +59,31 @@ func postTask_sql(tsk TaskPayload) (int64, error) {
 
 // TODO: add func putTasks_sql
 
+// Deletes all tasks in SQL database
+func deleteTasks_sql() (int64, error) {
+	result, err := db.Exec("DELETE FROM tasks")
+  if err != nil {
+		return 0, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+  
+  _, err = db.Exec("TRUNCATE TABLE tasks")
+	if err != nil {
+		return 0, err
+	}
+
+	_, err = db.Exec("ALTER TABLE tasks AUTO_INCREMENT = 1")
+	if err != nil {
+		return 0, err
+	}
+
+	return rowsAffected, nil
+}
+
 func deleteTaskByID_sql(id int) (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks WHERE id=(?)", id)
 	if err != nil {

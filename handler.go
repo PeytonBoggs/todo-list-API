@@ -84,6 +84,24 @@ func postTask(c *gin.Context) {
 func putTasks(c *gin.Context) {
 }
 
+// deleteTasks godoc
+// @Summary deleteTasks
+// @Description Deletes all tasks
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Router /tasks [DELETE]
+func deleteTasks(c *gin.Context) {
+	rowsAffected, err := deleteTasks_sql()
+  if err != nil {
+		c.IndentedJSON(http.StatusNotFound, err)
+		return
+	}
+  
+  message := strconv.Itoa(int(rowsAffected)) + " tasks deleted"
+	c.IndentedJSON(http.StatusOK, message)
+}
+
 // deleteTaskByID godoc
 // @Summary deleteTaskByID
 // @Description Deletes tast at specified ID
@@ -100,7 +118,7 @@ func deleteTaskByID(c *gin.Context) {
 	}
 
 	rowsAffected, err := deleteTaskByID_sql(id)
-	if err != nil {
+  if err != nil {
 		c.IndentedJSON(http.StatusNotFound, err)
 		return
 	}
