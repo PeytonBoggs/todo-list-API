@@ -41,7 +41,7 @@ func getTaskByID_sql(id int) (Task, error) {
 	return foundTask, nil
 }
 
-// Returns all tasks in SQL database with specified Complete value
+// Returns all tasks in SQL database with specified complete value
 func getTasksByComplete_sql(complete bool) ([]Task, error) {
 	var taskList []Task
 
@@ -77,12 +77,10 @@ func postTask_sql(tsk TaskPayload) (int64, error) {
 	return newID, nil
 }
 
-// TODO: add func putTasks_sql
-
 // Deletes all tasks in SQL database
 func deleteTasks_sql() (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks")
-  if err != nil {
+	if err != nil {
 		return 0, err
 	}
 
@@ -90,8 +88,8 @@ func deleteTasks_sql() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-  
-  _, err = db.Exec("TRUNCATE TABLE tasks")
+
+	_, err = db.Exec("TRUNCATE TABLE tasks")
 	if err != nil {
 		return 0, err
 	}
@@ -104,6 +102,7 @@ func deleteTasks_sql() (int64, error) {
 	return rowsAffected, nil
 }
 
+// Deletes task in SQL database with specified ID
 func deleteTaskByID_sql(id int) (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks WHERE id=(?)", id)
 	if err != nil {
@@ -118,6 +117,7 @@ func deleteTaskByID_sql(id int) (int64, error) {
 	return rowsAffected, nil
 }
 
+// Returns all tasks with a title that includes specified string in SQL database
 func getTasksByTitle_sql(title string) ([]Task, error) {
 	var taskList []Task
 
@@ -137,6 +137,7 @@ func getTasksByTitle_sql(title string) ([]Task, error) {
 	}
 
 	return taskList, nil
+}
 
 // Toggles the complete boolean of the task with input id in SQL database
 func patchCompleteByID_sql(id int) (int64, error) {
