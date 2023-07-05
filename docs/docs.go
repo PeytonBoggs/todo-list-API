@@ -43,7 +43,32 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/tasks/{id}": {
+        "/tasks/complete/{complete}": {
+            "get": {
+                "description": "Gets all tasks with specified \"complete\" value",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "getTasksByComplete",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Complete? true or false",
+                        "name": "complete",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/tasks/id/{id}": {
             "get": {
                 "description": "Gets all tasks with specified ID",
                 "consumes": [
