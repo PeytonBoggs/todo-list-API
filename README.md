@@ -85,3 +85,15 @@ For all commands,
         --include \
         --header "Content-Type: application/json" \
         --request "DELETE"
+
+### Patch complete by ID:
+    curl http://localhost:8080/tasks/{id} \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "PATCH"
+
+### Get table:
+
+In SQL logged-in terminal, having set the database,
+
+    SELECT * FROM tasks;

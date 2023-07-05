@@ -117,3 +117,18 @@ func deleteTaskByID_sql(id int) (int64, error) {
 
 	return rowsAffected, nil
 }
+
+// Toggles the complete boolean of the task with input id in SQL database
+func patchCompleteByID_sql(id int) (int64, error) {
+	result, err := db.Exec("UPDATE tasks SET complete = CASE WHEN complete = true THEN false WHEN complete = false THEN true END WHERE id = (?)", id)
+	if err != nil {
+		return 0, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return rowsAffected, nil
+}

@@ -100,6 +100,22 @@ paths:
       summary: getTaskByID
       tags:
       - root
+    patch:
+      consumes:
+      - '*/*'
+      description: Toggles complete at specified ID
+      parameters:
+      - description: The specified ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: patchCompleteByID
+      tags:
+      - root
 schemes:
 - http
 swagger: "2.0"

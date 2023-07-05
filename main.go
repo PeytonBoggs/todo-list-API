@@ -29,6 +29,7 @@ func main() {
 	router.GET("/tasks/id/:id", getTaskByID)
 	router.GET("/tasks/complete/:complete", getTasksByComplete)
 	router.POST("/tasks", postTask)
+	router.PATCH("/tasks/id/:id", patchCompleteByID)
 	router.PUT("/tasks/id/:id", putTasks)
 	router.DELETE("/tasks/id/:id", deleteTaskByID)
 	router.DELETE("/tasks", deleteTasks)
