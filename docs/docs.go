@@ -18,7 +18,7 @@ const docTemplate = `{
     "paths": {
         "/tasks": {
             "get": {
-                "description": "Gets all tasks in database",
+                "description": "Gets all tasks in database that pass applied filter",
                 "consumes": [
                     "*/*"
                 ],
@@ -28,7 +28,27 @@ const docTemplate = `{
                 "tags": [
                     "tasks"
                 ],
-                "summary": "getTasks",
+                "summary": "getTasksByFilter",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "title",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "complete",
+                        "name": "complete",
+                        "in": "query"
+                    }
+                ],
                 "responses": {}
             },
             "post": {
@@ -71,55 +91,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/tasks/complete/{complete}": {
-            "get": {
-                "description": "Gets all tasks with specified \"complete\" value",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "getTasksByComplete",
-                "parameters": [
-                    {
-                        "type": "boolean",
-                        "description": "Complete? true or false",
-                        "name": "complete",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/tasks/id/{id}": {
-            "get": {
-                "description": "Gets all tasks with specified ID",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "getTaskByID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "ID to get",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
             "delete": {
                 "description": "Deletes tast at specified ID",
                 "consumes": [
@@ -160,31 +132,6 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "The specified ID",
                         "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/tasks/title/{title}": {
-            "get": {
-                "description": "Gets all tasks whose title includes the specified string",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "getTasksByTitle",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The specified string",
-                        "name": "title",
                         "in": "path",
                         "required": true
                     }

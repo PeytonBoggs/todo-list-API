@@ -3,7 +3,6 @@ package main
 import (
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,67 +11,29 @@ import (
 func getHealth(c *gin.Context) {
 }
 
-// getTasks godoc
-// @Summary getTasks
-// @Description Gets all tasks in database
+// getTasksByFilter godoc
+// @Summary getTasksByFilter
+// @Description Gets all tasks in database that pass applied filter
 // @Tags tasks
+// @Param id query int false "id"
+// @Param title query string false "title"
+// @Param complete query boolean false "complete"
 // @Accept */*
 // @Produce json
-// @Router /tasks [get]
-func getTasks(c *gin.Context) {
-	taskList, err := getTasks_sql()
+// @Router /tasks [GET]
+func getTasksByFilter(c *gin.Context) {
+	searchedID := c.Query("id")
+
+	searchedTitle := c.Query("title")
+
+	searchedComplete := c.Query("complete")
+
+	filteredList, err := getTasksByFilter_sql(searchedID, searchedTitle, searchedComplete)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, err)
 	}
 
-	c.IndentedJSON(http.StatusOK, taskList)
-}
-
-// getTaskByID godoc
-// @Summary getTaskByID
-// @Description Gets all tasks with specified ID
-// @Tags tasks
-// @Param id path int true "ID to get"
-// @Accept */*
-// @Produce json
-// @Router /tasks/id/{id} [get]
-func getTaskByID(c *gin.Context) {
-	searchedID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.IndentedJSON(http.StatusBadRequest, err)
-	}
-
-	foundTask, err := getTaskByID_sql(searchedID)
-
-	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, err)
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, foundTask)
-}
-
-// getTasksByComplete godoc
-// @Summary getTasksByComplete
-// @Description Gets all tasks with specified "complete" value
-// @Tags tasks
-// @Param complete path boolean true "Complete? true or false""
-// @Accept */*
-// @Produce json
-// @Router /tasks/complete/{complete} [GET]
-func getTasksByComplete(c *gin.Context) {
-	complete, err := strconv.ParseBool(strings.ToUpper(c.Param("complete")))
-	if err != nil {
-		c.IndentedJSON(http.StatusBadRequest, "Error: value can either be true or false")
-		return
-	}
-
-	taskList, err := getTasksByComplete_sql(complete)
-	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, err)
-	}
-
-	c.IndentedJSON(http.StatusOK, taskList)
+	c.IndentedJSON(http.StatusOK, filteredList)
 }
 
 // postTask godoc
@@ -143,25 +104,6 @@ func deleteTaskByID(c *gin.Context) {
 
 	message := strconv.Itoa(int(rowsAffected)) + " task deleted"
 	c.IndentedJSON(http.StatusOK, message)
-}
-
-// getTasksByTitle godoc
-// @Summary getTasksByTitle
-// @Description Gets all tasks whose title includes the specified string
-// @Tags tasks
-// @Param title path string true "The specified string"
-// @Accept */*
-// @Produce json
-// @Router /tasks/title/{title} [get]
-func getTasksByTitle(c *gin.Context) {
-	title := c.Param("title")
-
-	taskList, err := getTasksByTitle_sql(title)
-	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, err)
-		return
-	}
-	c.IndentedJSON(http.StatusOK, taskList)
 }
 
 // patchCompleteByID godoc
