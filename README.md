@@ -58,16 +58,17 @@ For all commands,
     curl http://localhost:8080/health
     
 ### Get all tasks:
-    curl http://localhost:8080/tasks
+    curl 'http://localhost:8080/tasks?id=&title=&complete=' \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "GET"
 
-### Get task by ID:
-    curl http://localhost:8080/tasks/id/{id}
 
-### Get task by Complete:
-    curl http://localhost:8080/tasks/complete/{complete}
-
-### Get tasks by Title:
-    curl http://localhost:8080/tasks/title/{title}
+### Get tasks by filter:
+    curl 'http://localhost:8080/tasks?id={id}&title={title}&complete={complete}' \
+        --include \
+        --header "Content-Type: application/json" \
+        --request "GET"
 
 ### Post task:
     curl http://localhost:8080/tasks \
@@ -94,9 +95,3 @@ For all commands,
         --include \
         --header "Content-Type: application/json" \
         --request "PATCH"
-
-### Get table:
-
-In SQL logged-in terminal, having set the database,
-
-    SELECT * FROM tasks;

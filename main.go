@@ -24,11 +24,7 @@ func main() {
 	docs.SwaggerInfo.BasePath = ""
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	router.GET("/health", getHealth)
-	router.GET("/tasks", getTasks)
-	router.GET("/tasks/id/:id", getTaskByID)
-	router.GET("/tasks/title/:title", getTasksByTitle)
-	router.GET("/tasks/complete/:complete", getTasksByComplete)
+	router.GET("/tasks", getTasksByFilter)
 	router.POST("/tasks", postTask)
 	router.PATCH("/tasks/id/:id", patchCompleteByID)
 	router.DELETE("/tasks/id/:id", deleteTaskByID)

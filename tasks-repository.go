@@ -1,15 +1,37 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
+	"strconv"
 )
 
-// Returns all tasks in SQL database
-func getTasks_sql() ([]Task, error) {
+// Returns all tasks in the database that match input filter
+func getTasksByFilter_db(searchedID string, searchedTitle string, searchedComplete string) ([]Task, error) {
 	var taskList []Task
 
-	tasks, err := db.Query("SELECT * FROM tasks")
+	query := "SELECT * FROM tasks WHERE 1=1"
+
+	if searchedID != "" {
+		id, err := strconv.Atoi(searchedID)
+		if err != nil {
+			return taskList, err
+		}
+		query += " AND id = " + strconv.Itoa(id)
+	}
+
+	if searchedTitle != "" {
+		query += " AND title LIKE '%" + searchedTitle + "%'"
+	}
+
+	if searchedComplete != "" {
+		complete, err := strconv.ParseBool(searchedComplete)
+		if err != nil {
+			return taskList, err
+		}
+		query += " AND complete = " + strconv.FormatBool(complete)
+	}
+
+	tasks, err := db.Query(query)
 	if err != nil {
 		return taskList, err
 	}
@@ -24,47 +46,15 @@ func getTasks_sql() ([]Task, error) {
 		taskList = append(taskList, tsk)
 	}
 
-	return taskList, nil
-}
-
-// Returns task in SQL database with specified ID
-func getTaskByID_sql(id int) (Task, error) {
-	var foundTask Task
-
-	row := db.QueryRow("SELECT * FROM tasks WHERE id = ?", id)
-	if err := row.Scan(&foundTask.ID, &foundTask.Title, &foundTask.Complete); err != nil {
-		if err == sql.ErrNoRows {
-			return foundTask, fmt.Errorf("taskByID %d: no such task", id)
-		}
-		return foundTask, fmt.Errorf("taskByID %d: %v", id, err)
-	}
-	return foundTask, nil
-}
-
-// Returns all tasks in SQL database with specified complete value
-func getTasksByComplete_sql(complete bool) ([]Task, error) {
-	var taskList []Task
-
-	completeTasks, err := db.Query("SELECT * FROM tasks where COMPLETE = ?", complete)
-	if err != nil {
+	if err := tasks.Err(); err != nil {
 		return taskList, err
 	}
 
-	for completeTasks.Next() {
-		var tsk Task
-
-		if err := completeTasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
-			return taskList, err
-		}
-
-		taskList = append(taskList, tsk)
-	}
-
 	return taskList, nil
 }
 
-// Adds task to the end of SQL database
-func postTask_sql(tsk TaskPayload) (int64, error) {
+// Adds task to the end of the database
+func postTask_db(tsk TaskPayload) (int64, error) {
 	result, err := db.Exec("INSERT INTO tasks (Title, Complete) VALUES (?, ?)", tsk.Title, tsk.Complete)
 	if err != nil {
 		return 0, fmt.Errorf("error: %v", err)
@@ -77,8 +67,8 @@ func postTask_sql(tsk TaskPayload) (int64, error) {
 	return newID, nil
 }
 
-// Deletes all tasks in SQL database
-func deleteTasks_sql() (int64, error) {
+// Deletes all tasks in the database
+func deleteTasks_db() (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks")
 	if err != nil {
 		return 0, err
@@ -102,8 +92,8 @@ func deleteTasks_sql() (int64, error) {
 	return rowsAffected, nil
 }
 
-// Deletes task in SQL database with specified ID
-func deleteTaskByID_sql(id int) (int64, error) {
+// Deletes task in the database with specified ID
+func deleteTaskByID_db(id int) (int64, error) {
 	result, err := db.Exec("DELETE FROM tasks WHERE id=(?)", id)
 	if err != nil {
 		return 0, err
@@ -117,30 +107,8 @@ func deleteTaskByID_sql(id int) (int64, error) {
 	return rowsAffected, nil
 }
 
-// Returns all tasks with a title that includes specified string in SQL database
-func getTasksByTitle_sql(title string) ([]Task, error) {
-	var taskList []Task
-
-	tasks, err := db.Query("SELECT * FROM tasks WHERE title LIKE (?)", "%"+title+"%")
-	if err != nil {
-		return taskList, err
-	}
-
-	for tasks.Next() {
-		var tsk Task
-
-		if err := tasks.Scan(&tsk.ID, &tsk.Title, &tsk.Complete); err != nil {
-			return taskList, err
-		}
-
-		taskList = append(taskList, tsk)
-	}
-
-	return taskList, nil
-}
-
-// Toggles the complete boolean of the task with input id in SQL database
-func patchCompleteByID_sql(id int) (int64, error) {
+// Toggles the complete boolean of the task with input id in the database
+func patchCompleteByID_db(id int) (int64, error) {
 	result, err := db.Exec("UPDATE tasks SET complete = CASE WHEN complete = true THEN false WHEN complete = false THEN true END WHERE id = (?)", id)
 	if err != nil {
 		return 0, err
