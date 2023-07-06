@@ -26,6 +26,7 @@ func main() {
 	config.AllowAllOrigins = true
 	config.AllowHeaders = []string{"Origin", "Content-Type"}
 	config.AllowMethods = []string{"GET", "POST", "PATCH", "DELETE"}
+	router.Use(cors.New(config))
 
 	docs.SwaggerInfo.BasePath = ""
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
