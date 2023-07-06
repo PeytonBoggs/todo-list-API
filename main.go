@@ -3,6 +3,7 @@ package main
 import (
 	"todo-list/web-service-gin/docs"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	swaggerFiles "github.com/swaggo/files"
@@ -20,6 +21,11 @@ func main() {
 	initSQL()
 
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowHeaders = []string{"Origin", "Content-Type"}
+	config.AllowMethods = []string{"GET", "POST", "PATCH", "DELETE"}
 
 	docs.SwaggerInfo.BasePath = ""
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
