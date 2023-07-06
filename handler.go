@@ -7,10 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TODO: Implement getHealth
-func getHealth(c *gin.Context) {
-}
-
 // getTasksByFilter godoc
 // @Summary getTasksByFilter
 // @Description Gets all tasks in database that pass applied filter
@@ -28,7 +24,7 @@ func getTasksByFilter(c *gin.Context) {
 
 	searchedComplete := c.Query("complete")
 
-	filteredList, err := getTasksByFilter_sql(searchedID, searchedTitle, searchedComplete)
+	filteredList, err := getTasksByFilter_db(searchedID, searchedTitle, searchedComplete)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, err)
 	}
@@ -53,7 +49,7 @@ func postTask(c *gin.Context) {
 		return
 	}
 
-	newID, err := postTask_sql(newTask)
+	newID, err := postTask_db(newTask)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
@@ -71,7 +67,7 @@ func postTask(c *gin.Context) {
 // @Produce json
 // @Router /tasks [DELETE]
 func deleteTasks(c *gin.Context) {
-	rowsAffected, err := deleteTasks_sql()
+	rowsAffected, err := deleteTasks_db()
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, err)
 		return
@@ -96,7 +92,7 @@ func deleteTaskByID(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := deleteTaskByID_sql(id)
+	rowsAffected, err := deleteTaskByID_db(id)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, err)
 		return
@@ -121,7 +117,7 @@ func patchCompleteByID(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := patchCompleteByID_sql(id)
+	rowsAffected, err := patchCompleteByID_db(id)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, err)
 		return
